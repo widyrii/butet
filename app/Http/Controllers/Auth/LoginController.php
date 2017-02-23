@@ -44,18 +44,7 @@ class LoginController extends Controller
     }
          public function tryLogin(Request $r)
     {
-        $message = [
-            'email' => ':attribute tidak tidak sesuai', 
-            'required' => ':attribute tidak tidak boleh kurang dari 2'
-        ]
-        $validator = Validator::make($r->all(),[
-            'email' => 'email',
-            'password' => 'required|min:2',
-            ], $message);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
-        }
+    
 
         $email = $r->input('email');
         $password = $r->input('password');
