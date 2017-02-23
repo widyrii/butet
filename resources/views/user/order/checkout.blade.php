@@ -43,11 +43,10 @@
 												
 					  </div>
 				 </div>
-				 <?php
-				 $tes = $cart[$key]['price']++;
+				<?php
+				$tes = $cart[$key]['price']++;
 				 ?>
-				 @endforeach
-				 @endif
+				 
 			 <script>$(document).ready(function(c) {
 					$('.close2').on('click', function(c){
 							$('.cart-header2').fadeOut('slow', function(c){
@@ -57,22 +56,23 @@
 					});
 			 </script>	
 		 </div>
-		  <!-- <div class="col-md-3 cart-total">
+		  <div class="col-md-3 cart-total">
 			
 			 <div class="price-details">
-			 <script src="{{url('user/js/simpleCart.min.js')}}"> </script>
-			 	<h1>{{ $tes }}</h1>
+			 	<h1>{{$tes}}</h1>
 				 <h3>Price Details</h3>
 				 <span>Total</span>
-				 <span class="total1">{{ $tes }}</span>
+				 <span class="total1">{{$tes}}</span>
 				 
 				 <div class="clearfix"></div>				 
 			 </div>	
 			 <ul class="total_price">
 			   <li class="last_price"> <h4>TOTAL</h4></li>	
-			   <li class="last_price"><span>{{ $tes }}</span></li>
+			   <li class="last_price"><span>{{$tes}}</span></li>
 			   <div class="clearfix"> </div>
-			 </ul> -->
+			 </ul>
+			 @endforeach
+			@endif
 			
 			 
 			 <div class="clearfix"></div>

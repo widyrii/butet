@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use App\cake;
 use App\master_cake;
 use App\contact;
+use App\shipping;
 class WelcomeController extends Controller
 {
     public function index()
@@ -103,8 +104,37 @@ class WelcomeController extends Controller
 
      public function shipping()
 
-    {      
-            return view('/order.shipping');
+    {  
+        $cake = cake::all();    
+            $master_cake = master_cake::with('class')->get();
+        $cake = array('cake'=>cake::orderBy('id','desc')->limit(6)->get());
+        $cart = session('cart');
+        return view('user.order.shipping')->with($cake)->with('master_cakes',$master_cake)->with('cart',$cart)->with('cake', $master_cake);
+    }
+
+    public function shipping_save()
+    {
+            $data = new shipping;
+            $data->code_shipping=Input::get('code');
+            $data->email = Input::get('email');
+            $data->name = Input::get('name');
+            $data->address = Input::get('address');
+            $data->telp = Input::get('telp');
+            $data->status = Input::get('status');
+            $data->code_cake = Input::get('code_cake');
+
+            $data->save();
+
+            return redirect(url('/'));
+    }
+    public function register()
+    {
+         $s = new \App\User;
+         $s->name = Input::get('name');
+         $s->email= Input::get('email');
+         $s->password = bcrypt(Input::get('password'));
+         $s->save();
+         return redirect(url('/login'));
     }
 
 }

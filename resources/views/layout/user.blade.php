@@ -37,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			 @if (Auth::guest())	
 					<ul>
 						<li ><a href="{{url('login')}}"  >Login</a></li>
-						<li><a  href="register.html"  >Register</a></li>
+						<li><a  href="{{url('register')}}"  >Register</a></li>
 
 					</ul>
 			@else
@@ -82,6 +82,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="col1">
 								<div class="h_nav">
 									<ul>
+									@php
+									$master_cakes = \App\master_cake::with('class')->get();
+									@endphp
 									@foreach($master_cakes as $key => $master_cake)
 
 										<li><a href="{{url('/category/'.$master_cake->name)}}">{{$master_cake->name}}</a></li>
@@ -93,7 +96,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						  </div>
 						</div>
 					</li>
-				<li><a class="color4" href="blog.html">Blog</a></li>				
+				<li><a class="color4" href="{{url('/cek_order')}}">Cek Order</a></li>				
 				<li><a class="color6" href="{{url('/contact')}}">Contact</a></li>
 			  </ul> 
 			</div>

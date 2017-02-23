@@ -21,6 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/', 'WelcomeController@index');
+// Route::get('/', function() {
+// 	return bcrypt('ariwidya');
+// });
 Route::get('/welcome', 'WelcomeController@index');
 Route::post('/tryLogin', 'Auth\LoginController@tryLogin');
 
@@ -39,19 +42,14 @@ Route::post('cake/update', 'HomeController@cake_update');
 Route::get('cake/edit/{id}', 'HomeController@cake_edit');
 Route::get('cake/delete/{id}', 'HomeController@cake_delete');
 
-Route::get('/image/{filename}',
-	function ($filename)
-
-	{
-		$path = storage_path() . '/' . $filename;
-		$file = File::get($path);
-		$type = File::mimeType($path);
-
-		$response = Response::make($file, 200);
-		$response->header("content-Type", $type);
-
-		return $response;
-	});
+Route::get('/image/{filename}',function ($filename) {
+	$path = storage_path() . '/' . $filename;
+	$file = File::get($path);
+	$type = File::mimeType($path);
+	$response = Response::make($file);
+	$response->header("Content-Type", $type);
+	return $response;
+});
 
 Route::get('/category/{code_cake}','WelcomeController@category');
 
@@ -80,6 +78,18 @@ Route::post('/savecart','WelcomeController@save_cart');
 	Route::post('updatecart/{id}', 'WelcomeController@updatecart');
 
 Route::get('order/shipping','WelcomeController@shipping');
+Route::post('/shipping/save','WelcomeController@shipping_save');
+Route::get('/shipping/table','HomeController@shipping_table');
+Route::get('/shipping/delete/{id}', 'HomeController@shipping_delete');
+Route::get('/shipping/reject/{id}', 'HomeController@shipping_reject');
+Route::get('/shipping/accept/{id}', 'HomeController@shipping_accept');
+Route::get('/cek_order', 'HomeController@cek_order');
+
+Route::post('/sendemail/{code_shipping}', 'HomeController@shipping_sendemail');
+
+
+Route::post('/register','WelcomeController@register');
+Route::get('/cek_order/api/{code}', 'APIController@get_item');
 
 
 

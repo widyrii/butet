@@ -9,6 +9,8 @@ use App\master_cake;
 use App\cake;
 use Auth;
 use App\contact;
+use App\shipping;
+
 
 
 class HomeController extends Controller
@@ -152,4 +154,75 @@ class HomeController extends Controller
         $data = contact::all();
         return view('/admin/contact/table')->with('datas',$data);
     }
+
+    public function shipping_table()
+    {
+        $data = shipping::all();
+        return view('/admin/shipping/table')->with('datas',$data);
+    }
+
+     public function shipping_delete($id)
+    {
+        shipping::find($id)->delete();
+        return redirect(url('/shipping/table'));
+    }
+
+     public function shipping_accept($id)
+    {
+       $data = shipping::find($id);
+       $data->status = "accepted";
+       $data->save();
+       return redirect(url('shipping/table'));
+    }
+
+     public function shipping_reject($id)
+    {
+       $data = shipping::find($id);
+       $data->status = "rejected";
+       $data->save();
+       return redirect(url('shipping/table'));
+    }
+
+    public function shipping_sendemail(Request $r, $code_shipping)
+    {
+        $email= $r->input('email');
+        $user = shipping::where('email', $email)->first();
+        $code_shipping= $r->input('code_shipping');
+
+        try{
+            $a = new \PHPMailer(true);
+            $a->isSMTP();
+            $a->CharSet = "utf-8";
+            $a->SMTPAuth = true;
+            $a->SMTPSecure = "tls";
+            $a->SMTPAuth = true;
+            $a->Host = "smtp.gmail.com";
+            $a->Port = 587;
+            $a->Username = "widya985@gmail.com";
+            $a->Password = "ariwidya";
+            $a->SetFrom("widya985@gmail.com", "Widya Ari");
+            $a->Subject = "Confirmation Order Butet Cakes";
+            $a->MsgHTML('<h2> Hi'.$user->email.' ,</h2>'.
+                        '<h3>'.$code_shipping.'</h3>'.
+                        'Please confirmed check your order with an order code '. '<a href="http:localhost:8000">'.'click here'.'</a>'.'and would soon be at your adrress. For more information, please visit the Help Center or contact our'.'</a href="http:localhost:8000">'.' Customer Service.'.'</a>' );
+
+            $a->addAddress($email);
+            $a->send();
+            }
+            catch(Exception $e) {
+                dd($e);
+            }
+
+            
+
+
+
+        }
+
+    public function cek_order()
+    {
+        $data = master_cake::all();
+        return view('user.order.cek_order')->with('data',$data);
+    }
+
 }

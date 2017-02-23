@@ -58,11 +58,11 @@ class LoginController extends Controller
             // kalo password cocok
             if (Auth::attempt(['email' => $email, 'password' => $password])) {
                 // Authentication passed...
-                if(Auth::user()->type=='admin'){
-                return redirect(url('home'));
+                if(Auth::user()->type=="admin"){
+                return redirect(url('/home'));
                 }
                 else{
-                return redirect(url('welcome'));    
+                return redirect(url('/welcome'));    
                 }
             }
             else {
