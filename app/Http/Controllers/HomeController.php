@@ -204,7 +204,7 @@ class HomeController extends Controller
             $a->Subject = "Confirmation Order Butet Cakes";
             $a->MsgHTML('<h2> Hi'.$user->email.' ,</h2>'.
                         '<h3>'.$code_shipping.'</h3>'.
-                        'Please confirmed check your order with an order code '. '<a href="http:localhost:8000">'.'click here'.'</a>'.'and would soon be at your adrress. For more information, please visit the Help Center or contact our'.'</a href="http:localhost:8000">'.' Customer Service.'.'</a>' );
+                        'Please confirmed check your order with an order code '. '<a href="http//butet.ga/cek_order">'.'click here'.'</a>'.'and would soon be at your adrress. For more information, please visit the Help Center or contact our'.'</a href="">'.' Customer Service.'.'</a>' );
 
             $a->addAddress($email);
             $a->send();
@@ -222,7 +222,7 @@ class HomeController extends Controller
     public function cek_order()
     {
         $data = master_cake::all();
-        return view('user.order.cek_order')->with('data',$data);
+        return view('user.order.cek_order')->with('data',$datas);
     }
 
 }
